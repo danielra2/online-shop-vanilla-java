@@ -5,4 +5,3 @@
 5,george.mihai@yahoo.com,parola,George Mihai
 1,john.doe@gmail.com,parola,John Doe
 1,john.doe@gmail.com,parola,John Doe
-1,john.doe@gmail.com,parola,John Doe
