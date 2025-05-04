@@ -1,0 +1,9 @@
+1,101,3200,Bulevardul Unirii 45
+2,102,2500,Strada Lalelelor 12
+3,103,900,Calea Aradului 88
+4,104,150,Strada Castanilor 3
+5,105,450,Strada Libertatii 9
+1,101,3200,Bulevardul Unirii 45
+1,101,3200,Bulevardul Unirii 45
+1,101,3200,Bulevardul Unirii 45
+1,101,3200,Bulevardul Unirii 45

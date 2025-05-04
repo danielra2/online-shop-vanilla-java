@@ -1,0 +1,9 @@
+1,Laptop Lenovo,3200,Ultrabook 15 inch,2024-11-15,25
+2,Telefon Samsung,2500,Smartphone 6.5 inch AMOLED,2025-01-10,40
+3,Monitor Dell,900,LED 24 inch Full HD,2024-09-05,18
+4,Mouse Logitech,150,Wireless ergonomic,2025-03-20,70
+5,Casti Sony,450,Noise-cancelling over-ear,2025-02-28,35
+1,Laptop Lenovo,3200,Ultrabook 15 inch,2024-11-15,25
+1,Laptop Lenovo,3200,Ultrabook 15 inch,2024-11-15,25
+1,Laptop Lenovo,3200,Ultrabook 15 inch,2024-11-15,25
+1,Laptop Lenovo,3200,Ultrabook 15 inch,2024-11-15,25
