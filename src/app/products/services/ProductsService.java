@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ProductsService {
@@ -52,5 +53,37 @@ public class ProductsService {
             e.printStackTrace();
         }
     }
+    public void afisareProduse(){
+        for(int i=0;i<productsList.size();i++){
+            System.out.println(productsList.get(i).getName());
+        }
+    }
+    public Products getProductByName(String nume){
+        for(int i=0;i<productsList.size();i++){
+            if(this.productsList.get(i).getName().equalsIgnoreCase(nume)){
+                return this.productsList.get(i);
+            }
+        }
+        return null;
+    }
+    public int randomId(){
+        Random random=new Random();
+        int id;
+        List<Integer>ids=new ArrayList<>();
+        for(int i=0;i<productsList.size();i++){
+            ids.add(this.productsList.get(i).getId());
+
+        }
+        do{
+            id=random.nextInt(1000)+1;
+
+        }while(ids.contains(id));
+        return id;
+    }
+    public String adaugaProdus(int id,String nume,int pret,String description,String createDate,int stock){
+        String text=id+","+nume+","+pret+","+description+","+createDate+","+stock;
+        return text;
+    }
+
 
 }
