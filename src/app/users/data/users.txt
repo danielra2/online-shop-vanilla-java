@@ -3,5 +3,3 @@
 3,marian.ionescu@outlook.com,parola,Marian Ionescu
 4,elena.stan@gmail.com,parola,Elena Stan
 5,george.mihai@yahoo.com,parola,George Mihai
-1,john.doe@gmail.com,parola,John Doe
-1,john.doe@gmail.com,parola,John Doe

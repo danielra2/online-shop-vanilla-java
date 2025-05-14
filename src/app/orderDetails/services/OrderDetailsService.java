@@ -1,6 +1,8 @@
 package app.orderDetails.services;
 
 import app.orderDetails.models.OrderDetails;
+import app.orders.models.Orders;
+import app.orders.services.OrdersService;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,8 +13,10 @@ import java.util.Scanner;
 
 public class OrderDetailsService {
     private List<OrderDetails>orderDetails;
+    private OrdersService ordersService;
 
     public OrderDetailsService(){
+        ordersService=new OrdersService();
         orderDetails=new ArrayList<>();
         load();
     }
@@ -52,5 +56,28 @@ public class OrderDetailsService {
     }
     public void add(OrderDetails orderDetails){
         this.orderDetails.add(orderDetails);
+    }
+    //todo: iau toate comenzile care au un anumit id,fac lista cu id ului
+
+    public List<OrderDetails>getAllOrderDetailsByOrderId(int orderId){
+        List<OrderDetails>searchedDetails= new ArrayList<>();
+        for(int i=0;i<orderDetails.size();i++){
+            if(orderDetails.get(i).getOrderId()==orderId){
+                searchedDetails.add(orderDetails.get(i));
+            }
+        }
+        return searchedDetails;
+    }
+    public int getNextOrderDetailId(){
+        if(orderDetails.isEmpty()){
+            return 1;
+        }
+        int maxId=0;
+        for(int i=0;i<orderDetails.size();i++){
+            if(orderDetails.get(i).getId()>maxId){
+                maxId=orderDetails.get(i).getId();
+            }
+        }
+        return maxId+1;
     }
 }

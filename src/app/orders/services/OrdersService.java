@@ -53,4 +53,35 @@ public class OrdersService {
     public void add(Orders orders){
         this.orders.add(orders);
     }
+
+
+    //todo: afisez toate comenzile care au un anumit customerId
+     public List<Orders>ordersByCustomerId(int id){
+        List<Orders>ordersList=new ArrayList<>();
+        for(int i=0;i<orders.size();i++){
+            if(orders.get(i).getCustomerId()==id){
+                ordersList.add(orders.get(i));
+            }
+        }
+        return ordersList;
+     }
+     public Orders placeOrder(int id,int customerId,int ammount,String shippingAddress){
+        Orders order=new Orders(id,customerId,ammount,shippingAddress);
+        if(order!=null){
+            return order;
+        }
+        return null;
+     }
+     public int getNextOrderId(){
+        if(orders.isEmpty()){
+            return 1;
+        }
+        int maxId=0;
+        for(int i=0;i<orders.size();i++){
+            if(orders.get(i).getId()>maxId){
+                maxId=orders.get(i).getId();
+            }
+        }
+        return maxId+1;
+     }
 }

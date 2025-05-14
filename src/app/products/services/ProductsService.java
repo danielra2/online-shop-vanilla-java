@@ -1,5 +1,9 @@
 package app.products.services;
 
+import app.orderDetails.models.OrderDetails;
+import app.orderDetails.services.OrderDetailsService;
+import app.orders.models.Orders;
+import app.orders.services.OrdersService;
 import app.products.models.Products;
 
 import java.io.File;
@@ -12,9 +16,13 @@ import java.util.Scanner;
 
 public class ProductsService {
     private List<Products>productsList;
+    private OrdersService ordersService;
+    private OrderDetailsService orderDetailsService;
 
     public ProductsService(){
         productsList=new ArrayList<>();
+        ordersService=new OrdersService();
+        orderDetailsService=new OrderDetailsService();
         load();
     }
     public void load(){
@@ -86,4 +94,16 @@ public class ProductsService {
     }
 
 
+    //todo:get product by id
+     public Products getProductById(int id){
+        for(int i=0;i<productsList.size();i++){
+            if(productsList.get(i).getId()==id){
+                return productsList.get(i);
+            }
+        }
+        return null;
+     }
+     public void updateProducts(Products products){
+
+     }
 }

@@ -1,18 +1,18 @@
 package app.users.models;
 
-public class Users {
+public class User {
     private int id;
     private String email;
     private String password;
     private String fullName;
 
-    public Users(int id, String email, String password, String fullName) {
+    public User(int id, String email, String password, String fullName) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
     }
-    public Users(String text){
+    public User(String text){
         String[]prop=text.split(",");
         this.id=Integer.parseInt(prop[0]);
         this.email=prop[1];
