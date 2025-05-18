@@ -8,6 +8,7 @@ import app.products.models.Products;
 import app.products.services.ProductsService;
 import app.system.Cart;
 import app.system.CartItem;
+import app.system.PopularProduct;
 import app.users.models.User;
 import org.w3c.dom.ls.LSOutput;
 
@@ -29,7 +30,7 @@ public class View {
         ordersService = new OrdersService();
         cart = new Cart();
         scanner = new Scanner(System.in);
-        this.user = new User("1,john.doe@gmail.com,parola,John Doe");
+        this.user = new User("2,john.doe@gmail.com,parola,John Doe");
         play();
     }
 
@@ -41,6 +42,12 @@ public class View {
         System.out.println("5->View cart");
         System.out.println("6->Delete from cart");
         System.out.println("7->Edit cart");
+        System.out.println("8->Place order");
+        System.out.println("9->Cancel Order");
+        System.out.println("0->View stock by product name");
+        System.out.println("11->View most popular product");
+        System.out.println("12->View all ordered products");
+        System.out.println("13->View product order Date");
 
         //orders
 
@@ -77,6 +84,23 @@ public class View {
                 case 7:
                     editCart();
                     break;
+                case 8:
+                    placeOrder();
+                    break;
+                case 9:
+                    viewCancelOrder();
+                    break;
+                case 0:
+                    viewStockByProductName();
+                case 11:
+                    viewMostPopularProduct();
+                    break;
+                case 12:
+                    viewAllOrderedProducts();
+                    break;
+                case 13:
+                    viewAllDates();
+                    break;
             }
         }
     }
@@ -104,7 +128,7 @@ public class View {
         } else {
             for (int i = 0; i < orderDetailsList.size(); i++) {
                 Products products = this.productsService.getProductById(orderDetailsList.get(i).getProductId());
-                System.out.println(products.getDescriptions());
+                System.out.println(products.getName()+" "+products.getDescriptions());
 
             }
         }
@@ -175,4 +199,106 @@ public class View {
         }
 
     }
+    public void placeOrder(){
+        if(cart.getItems().isEmpty()){
+            System.out.println("Your cart is empty, add some items in the cart!");
+            return;
+        }
+        System.out.println("Enter the shipping address");
+        String address=scanner.nextLine();
+        int totalAmount=cart.cartTotalPrice();
+        int newOrderId= ordersService.getNextOrderId();
+        String orderedDate="12.05.2025";
+        Orders newOrder=new Orders(newOrderId,user.getId(),totalAmount,address,orderedDate);
+        ordersService.add(newOrder);
+
+        List<CartItem> cartItems = cart.getItems();
+        for (int i = 0; i<cartItems.size(); i++) {
+            CartItem item = cartItems.get(i);
+            int orderDetailId=orderDetailsService.getNextOrderDetailId();
+            Products product=item.getProduct();
+            OrderDetails orderDetail=new OrderDetails(orderDetailId,newOrderId,product.getId(),product.getPrice(),item.getQuantity());
+            orderDetailsService.add(orderDetail);
+            product.setStock(product.getStock()-item.getQuantity());
+        }
+        cart.clearCart();
+        System.out.println("Order placed successfully!Order ID: " + newOrderId);
+        System.out.println("Total amount: " + totalAmount);
+    }
+    public void viewCancelOrder(){
+        System.out.println("Enter the order id you want to cancel");
+        int id=scanner.nextInt();
+        List<OrderDetails>orderDetails=orderDetailsService.getAllOrderDetailsByOrderId(id);
+        for(int i=0;i<orderDetails.size();i++){
+            Products products=productsService.getProductById(orderDetails.get(i).getProductId());
+            int cantitate=orderDetails.get(i).getQuantity();
+            products.setStock(products.getStock()+cantitate);
+        }
+        if(ordersService.cancelOrder(id)){
+            System.out.println("There order with ID "+id+" was cancelled");
+        }
+        else{
+            System.out.println("Order not found");
+        }
+
+    }
+    public void viewStockByProductName(){
+        System.out.println("For what item would you like to see the stock?");
+        String nume=scanner.nextLine();
+        int stoc=productsService.getStockByProductName(nume);
+        System.out.println("Stocul este "+stoc);
+    }
+    public void viewMostPopularProduct(){
+        PopularProduct popularProduct=orderDetailsService.mostPopularProduct();
+        if(popularProduct==null){
+            System.out.println("No data");
+        }
+        else{
+            int id=popularProduct.getPopularProductId();
+            Products products=productsService.getProductById(id);
+            System.out.println("The most popular product is: ");
+            System.out.println(products.getName());
+        }
+    }
+    public void viewAllOrderedProducts(){
+        List<Orders>ordersList=ordersService.ordersByCustomerId(user.getId());
+        List<Integer>orderIds=new ArrayList<>();
+        for(int i=0;i<ordersList.size();i++){
+            orderIds.add(ordersList.get(i).getId());
+        }
+        List<Integer>productsIds=orderDetailsService.productIds(orderIds);
+        List<Products>allOrderedProducts=productsService.allProductsFromOrder(productsIds);
+
+        System.out.println("Clientul cu id: "+ user.getId()+" a comandat:");
+        for(int i=0;i<allOrderedProducts.size();i++){
+            System.out.println(allOrderedProducts.get(i).getName());
+        }
+    }
+    //todo:
+    public void viewAllDates(){
+        System.out.println("For what product would you like to see the order date?");
+        String name=scanner.nextLine();
+        Products products= productsService.getProductIdByName(name);
+        int id=products.getId();
+        List<Integer>orderDetailsList=orderDetailsService.getOrderIdsFromProductId(id);
+        List<Orders>ordersList=ordersService.getAllOrdersByIds(orderDetailsList);
+        System.out.println("The product was ordered at: ");
+        for(int i=0;i<ordersList.size();i++){
+            System.out.println(ordersList.get(i).getOrderedDate());
+        }
+
+
+
+        //etapa1 id produsului
+
+        //etapa 2  order details sa vedem orderele pe care se afla respectivul produs
+
+
+        //etapa 3 returnam toate orderele si extragem dataele
+
+
+    }
+
+
+
 }

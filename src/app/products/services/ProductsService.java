@@ -5,6 +5,7 @@ import app.orderDetails.services.OrderDetailsService;
 import app.orders.models.Orders;
 import app.orders.services.OrdersService;
 import app.products.models.Products;
+import app.system.PopularProduct;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -106,4 +107,40 @@ public class ProductsService {
      public void updateProducts(Products products){
 
      }
+     public int getStockByProductName(String name){
+        for(int i=0;i<productsList.size();i++){
+            if(productsList.get(i).getName().equalsIgnoreCase(name)){
+                return productsList.get(i).getStock();
+            }
+        }
+        return 0;
+     }
+
+
+     public List<Products>allProductsFromOrder(List<Integer>productIds){
+        List<Products>products=new ArrayList<>();
+        for(int i=0;i<productsList.size();i++){
+            if(productIds.contains(productsList.get(i).getId())){
+                products.add(productsList.get(i));
+            }
+        }
+        return products;
+     }
+     public List<Integer>allProductIds(){
+        List<Integer>allProductID=new ArrayList<>();
+        for(int i=0;i<productsList.size();i++){
+            allProductID.add(productsList.get(i).getId());
+        }
+        return allProductID;
+     }
+     public Products getProductIdByName(String name){
+        for(int i=0;i<productsList.size();i++){
+            if(productsList.get(i).getName().equalsIgnoreCase(name)){
+                return productsList.get(i);
+            }
+        }
+        return null;
+     }
+
+
 }

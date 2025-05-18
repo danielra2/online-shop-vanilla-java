@@ -3,6 +3,8 @@ package app.orderDetails.services;
 import app.orderDetails.models.OrderDetails;
 import app.orders.models.Orders;
 import app.orders.services.OrdersService;
+import app.products.services.ProductsService;
+import app.system.PopularProduct;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -80,4 +82,76 @@ public class OrderDetailsService {
         }
         return maxId+1;
     }
+    public PopularProduct getPopularProductId(int id, List<PopularProduct>popularProducts){
+        for(int i=0;i<popularProducts.size();i++){
+            if(popularProducts.get(i).getPopularProductId()==id){
+                return popularProducts.get(i);
+            }
+        }
+        return null;
+    }
+    public List<PopularProduct>popularProducts(){
+        List<PopularProduct>popularProductsList=new ArrayList<>();
+        for(int i=0;i<orderDetails.size();i++){
+            int productId=orderDetails.get(i).getProductId();
+            PopularProduct popularProduct=getPopularProductId(productId,popularProductsList);
+            int quantity=orderDetails.get(i).getQuantity();
+            if(popularProduct==null){
+                PopularProduct popularProduct1=new PopularProduct(productId,quantity);
+                popularProductsList.add(popularProduct1);
+            }
+            else{
+                int frec=popularProduct.getFrequency();
+                frec+=quantity;
+                popularProduct.setFrequency(frec);
+            }
+        }
+        return popularProductsList;
+    }
+    public PopularProduct mostPopularProduct(){
+        List<PopularProduct>popularProducts=popularProducts();
+        if(popularProducts==null||popularProducts.isEmpty()){
+            return null;
+        }
+        PopularProduct max=popularProducts.get(0);
+        for(int i=1;i<popularProducts.size();i++){
+            if(popularProducts.get(i).getFrequency()> max.getFrequency()){
+                max=popularProducts.get(i);
+            }
+        }
+        return max;
+    }
+
+    public List<Integer>productIds(List<Integer> orderIds){
+        List<Integer>productIds=new ArrayList<>();
+        for(int i=0;i<orderDetails.size();i++){
+            if(orderIds.contains(orderDetails.get(i).getOrderId())){
+                productIds.add(orderDetails.get(i).getProductId());
+            }
+
+
+        }
+        return productIds;
+
+    }
+    public List<Integer>orderIds(List<Integer>productIds){
+        List<Integer>orderIds=new ArrayList<>();
+        for(int i=0;i<orderDetails.size();i++){
+            if(productIds.contains(orderDetails.get(i).getProductId()));
+            orderIds.add(orderDetails.get(i).getOrderId());
+        }
+        return orderIds;
+    }
+    public List<Integer> getOrderIdsFromProductId(int id){
+
+        List<Integer> allorderIds= new ArrayList<>();
+        for(int i=0;i<orderDetails.size();i++){
+            if(orderDetails.get(i).getProductId()==id){
+                allorderIds.add(orderDetails.get(i).getOrderId());
+            }
+        }
+        return allorderIds;
+
+    }
+
 }

@@ -16,6 +16,9 @@ public class Cart {
         productsService=new ProductsService();
     }
 
+
+
+
     //todo:
 
     //add item
@@ -97,9 +100,15 @@ public class Cart {
     public int cartTotalPrice(){
         int price=0;
         for(int i=0;i<cartItems.size();i++){
-            price+=cartItems.get(i).getProduct().getPrice();
+            price+=cartItems.get(i).getProduct().getPrice()*cartItems.get(i).getQuantity();
         }
         return price;
+    }
+    public List<CartItem> getItems() {
+        return cartItems;
+    }
+    public void clearCart(){
+        cartItems.clear();
     }
 
 
