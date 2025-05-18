@@ -1,19 +1,29 @@
 package app.products.services;
 
+import app.orderDetails.models.OrderDetails;
+import app.orderDetails.services.OrderDetailsService;
+import app.orders.models.Orders;
+import app.orders.services.OrdersService;
 import app.products.models.Products;
+import app.system.PopularProduct;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ProductsService {
     private List<Products>productsList;
+    private OrdersService ordersService;
+    private OrderDetailsService orderDetailsService;
 
     public ProductsService(){
         productsList=new ArrayList<>();
+        ordersService=new OrdersService();
+        orderDetailsService=new OrderDetailsService();
         load();
     }
     public void load(){
@@ -52,5 +62,85 @@ public class ProductsService {
             e.printStackTrace();
         }
     }
+    public void afisareProduse(){
+        for(int i=0;i<productsList.size();i++){
+            System.out.println(productsList.get(i).getName());
+        }
+    }
+    public Products getProductByName(String nume){
+        for(int i=0;i<productsList.size();i++){
+            if(this.productsList.get(i).getName().equalsIgnoreCase(nume)){
+                return this.productsList.get(i);
+            }
+        }
+        return null;
+    }
+    public int randomId(){
+        Random random=new Random();
+        int id;
+        List<Integer>ids=new ArrayList<>();
+        for(int i=0;i<productsList.size();i++){
+            ids.add(this.productsList.get(i).getId());
+
+        }
+        do{
+            id=random.nextInt(1000)+1;
+
+        }while(ids.contains(id));
+        return id;
+    }
+    public String adaugaProdus(int id,String nume,int pret,String description,String createDate,int stock){
+        String text=id+","+nume+","+pret+","+description+","+createDate+","+stock;
+        return text;
+    }
+
+
+    //todo:get product by id
+     public Products getProductById(int id){
+        for(int i=0;i<productsList.size();i++){
+            if(productsList.get(i).getId()==id){
+                return productsList.get(i);
+            }
+        }
+        return null;
+     }
+     public void updateProducts(Products products){
+
+     }
+     public int getStockByProductName(String name){
+        for(int i=0;i<productsList.size();i++){
+            if(productsList.get(i).getName().equalsIgnoreCase(name)){
+                return productsList.get(i).getStock();
+            }
+        }
+        return 0;
+     }
+
+
+     public List<Products>allProductsFromOrder(List<Integer>productIds){
+        List<Products>products=new ArrayList<>();
+        for(int i=0;i<productsList.size();i++){
+            if(productIds.contains(productsList.get(i).getId())){
+                products.add(productsList.get(i));
+            }
+        }
+        return products;
+     }
+     public List<Integer>allProductIds(){
+        List<Integer>allProductID=new ArrayList<>();
+        for(int i=0;i<productsList.size();i++){
+            allProductID.add(productsList.get(i).getId());
+        }
+        return allProductID;
+     }
+     public Products getProductIdByName(String name){
+        for(int i=0;i<productsList.size();i++){
+            if(productsList.get(i).getName().equalsIgnoreCase(name)){
+                return productsList.get(i);
+            }
+        }
+        return null;
+     }
+
 
 }

@@ -1,9 +1,5 @@
-1,101,3200,Bulevardul Unirii 45
-2,102,2500,Strada Lalelelor 12
-3,103,900,Calea Aradului 88
-4,104,150,Strada Castanilor 3
-5,105,450,Strada Libertatii 9
-1,101,3200,Bulevardul Unirii 45
-1,101,3200,Bulevardul Unirii 45
-1,101,3200,Bulevardul Unirii 45
-1,101,3200,Bulevardul Unirii 45
+1,1,3200,Bulevardul Unirii 45,15 05 2019
+2,2,2500,Strada Lalelelor 12,23 04 2020
+3,1,900,Calea Aradului 88,10 10 2021
+4,3,150,Strada Castanilor 3,11 05 2025
+5,3,450,Strada Libertatii 9,12-12-2024
