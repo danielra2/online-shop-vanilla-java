@@ -1,5 +1,5 @@
-1,john.doe@gmail.com,parola,John Doe
-2,ana.popescu@yahoo.com,parola,Ana Popescu
-3,marian.ionescu@outlook.com,parola,Marian Ionescu
-4,elena.stan@gmail.com,parola,Elena Stan
-5,george.mihai@yahoo.com,parola,George Mihai
+CLIENT,1,john.doe@gmail.com,parola,John Doe,0774098218,true
+CLIENT,2,ana.popescu@yahoo.com,parola,Ana Popescu,0369777321,false
+ADMIN,3,marian.ionescu@outlook.com,parola,Marian Ionescu,17-07-2024
+ADMIN,4,elena.stan@gmail.com,parola,Elena Stan,03-03-2024
+CLIENT,5,george.mihai@yahoo.com,parola,George Mihai,0765123876,true

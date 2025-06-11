@@ -1,25 +1,33 @@
 package app.users.models;
 
+import app.roles.Roles;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private int id;
     private String email;
     private String password;
     private String fullName;
+    private List<Roles> roles;
 
-    public User(int id, String email, String password, String fullName) {
+    public User(int id, String email, String password, String fullName,List<Roles>roles) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
+        this.roles=roles;
     }
-    public User(String text){
+    public User(String text,List<Roles>roles){
+        this.roles=new ArrayList<>();
         String[]prop=text.split(",");
-        this.id=Integer.parseInt(prop[0]);
-        this.email=prop[1];
-        this.password=prop[2];
-        this.fullName=prop[3];
+        this.id=Integer.parseInt(prop[1]);
+        this.email=prop[2];
+        this.password=prop[3];
+        this.fullName=prop[4];
     }
-    public String proprietati(){
+    public String descriere(){
         return id+","+email+","+password+","+fullName;
     }
 
@@ -53,5 +61,12 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public List<Roles> getRoles() {
+        return roles;
+    }
+    public void setRoles(List<Roles> roles) {
+        this.roles = roles;
     }
 }

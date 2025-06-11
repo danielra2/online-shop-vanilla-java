@@ -6,13 +6,18 @@ import app.orders.models.Orders;
 import app.orders.services.OrdersService;
 import app.products.models.Products;
 import app.products.services.ProductsService;
+import app.roles.Roles;
 import app.system.Cart;
 import app.system.CartItem;
 import app.system.PopularProduct;
+import app.users.models.Admin;
 import app.users.models.User;
+import app.users.services.UsersService;
 import org.w3c.dom.ls.LSOutput;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,14 +28,17 @@ public class View {
     private User user;
     private OrdersService ordersService;
     private Cart cart;
+    private UsersService usersService;
+    private ViewLogin viewLogin;
 
     public View() {
         productsService = new ProductsService();
         orderDetailsService = new OrderDetailsService();
         ordersService = new OrdersService();
+        usersService=new UsersService();
+        viewLogin=new ViewLogin();
         cart = new Cart();
         scanner = new Scanner(System.in);
-        this.user = new User("2,john.doe@gmail.com,parola,John Doe");
         play();
     }
 
@@ -48,6 +56,7 @@ public class View {
         System.out.println("11->View most popular product");
         System.out.println("12->View all ordered products");
         System.out.println("13->View product order Date");
+        System.out.println("14->Afiseaza toti clientii");
 
         //orders
 
@@ -55,52 +64,92 @@ public class View {
         //admin stataics
 
     }
+    public void loginMenu(){
+        System.out.println("1->Login");
+        System.out.println("0->Exit");
+    }
+    public void clientMenu(){
+        System.out.println("client");
+    }
+    public void adminMenu(){
+        System.out.println("admin");
+
+    }
 
     public void play() {
         boolean isRunning = true;
         while (isRunning) {
-            this.shopMenu();
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            switch (choice) {
-                case 1:
-                    productsService.afisareProduse();
-                    break;
-                case 2:
-                    showOrdersByCustomerId();
-                    break;
-                case 3:
-                    showAllProductDetailsFromOrder();
-                    break;
-                case 4:
-                    showAddItem();
-                    break;
-                case 5:
-                    viewCart();
-                    break;
-                case 6:
-                    showEraseItem();
-                    break;
-                case 7:
-                    editCart();
-                    break;
-                case 8:
-                    placeOrder();
-                    break;
-                case 9:
-                    viewCancelOrder();
-                    break;
-                case 0:
-                    viewStockByProductName();
-                case 11:
-                    viewMostPopularProduct();
-                    break;
-                case 12:
-                    viewAllOrderedProducts();
-                    break;
-                case 13:
-                    viewAllDates();
-                    break;
+            if (user == null) {
+                this.loginMenu();
+                int choice = scanner.nextInt();
+                switch (choice) {
+                    case 1:
+                        user = viewLogin.login();
+                        break;
+                    case 0:
+                        isRunning = false;
+                        System.out.println("Goodbye");
+                        break;
+                }
+            }
+            else {
+                if (user.getRoles().contains(Arrays.asList(Roles.CLIENT))){
+                    this.clientMenu();
+                    int choice = scanner.nextInt();
+                    switch (choice){
+                        case 1:productsService.afisareProduse();
+                    }
+
+
+                }
+                else if (user.getRoles().contains(Arrays.asList(Roles.ADMIN))) {
+                    this.adminMenu();
+                    int choice = scanner.nextInt();
+                    switch (choice) {
+                        case 1:
+                            productsService.afisareProduse();
+                            break;
+                        case 2:
+                            showOrdersByCustomerId();
+                            break;
+                        case 3:
+                            showAllProductDetailsFromOrder();
+                            break;
+                        case 4:
+                            showAddItem();
+                            break;
+                        case 5:
+                            viewCart();
+                            break;
+                        case 6:
+                            showEraseItem();
+                            break;
+                        case 7:
+                            editCart();
+                            break;
+                        case 8:
+                            placeOrder();
+                            break;
+                        case 9:
+                            viewCancelOrder();
+                            break;
+                        case 0:
+                            viewStockByProductName();
+                        case 11:
+                            viewMostPopularProduct();
+                            break;
+                        case 12:
+                            viewAllOrderedProducts();
+                            break;
+                        case 13:
+                            viewAllDates();
+                            break;
+                        case 14:
+                            usersService.afisare();
+
+                    }
+
+                }
             }
         }
     }
