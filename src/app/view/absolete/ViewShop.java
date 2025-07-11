@@ -1,4 +1,4 @@
-package app.view;
+package app.view.absolete;
 
 import app.products.models.Products;
 import app.products.services.ProductsService;

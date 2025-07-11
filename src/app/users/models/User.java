@@ -5,7 +5,7 @@ import app.roles.Roles;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public abstract class User {
     private int id;
     private String email;
     private String password;
@@ -69,4 +69,19 @@ public class User {
     public void setRoles(List<Roles> roles) {
         this.roles = roles;
     }
+    public static User fabricaUser(UserTypes tip,String text){
+        switch (tip){
+            case CLIENT -> {
+                return new Client(text);
+            }
+            case ADMIN -> {
+                return new Admin(text);
+            }
+        }
+        return null;
+    }
+    public abstract UserTypes getUserType();
+
+
+
 }

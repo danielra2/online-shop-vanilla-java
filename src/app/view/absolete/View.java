@@ -1,4 +1,4 @@
-package app.view;
+package app.view.absolete;
 
 import app.orderDetails.models.OrderDetails;
 import app.orderDetails.services.OrderDetailsService;
@@ -10,12 +10,9 @@ import app.roles.Roles;
 import app.system.Cart;
 import app.system.CartItem;
 import app.system.PopularProduct;
-import app.users.models.Admin;
 import app.users.models.User;
 import app.users.services.UsersService;
-import org.w3c.dom.ls.LSOutput;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

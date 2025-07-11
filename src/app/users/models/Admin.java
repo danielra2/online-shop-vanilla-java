@@ -29,11 +29,21 @@ public class Admin extends User {
     public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
+    @Override
 
     public String descriere() {
             String text = "";
             text = getId() + " " + getEmail() + " " + getPassword() + " " + getFullName() + " " + getLastLogin();
             return text;
         }
-    }
+
+        @Override
+    public UserTypes getUserType(){
+        return UserTypes.ADMIN;
+
+        }
+
+
+
+}
 

@@ -25,11 +25,13 @@ public class UsersService {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                UserTypes types = UserTypes.valueOf(line.split(",")[0]);
-                switch (types) {
-                    case ADMIN -> this.userList.add(new Admin(line));
-                    case CLIENT -> this.userList.add(new Client(line));
+                String[]parti=line.split(",");
+                UserTypes tip=UserTypes.valueOf(parti[0]);
+                User user=User.fabricaUser(tip,line);
+                if(user!=null){
+                    this.userList.add(user);
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
