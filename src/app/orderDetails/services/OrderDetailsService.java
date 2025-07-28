@@ -1,9 +1,8 @@
 package app.orderDetails.services;
 
 import app.orderDetails.models.OrderDetails;
-import app.orders.models.Orders;
 import app.orders.services.OrdersService;
-import app.products.services.ProductsService;
+import app.orders.services.OrdersCommandServiceSingleton;
 import app.system.PopularProduct;
 
 import java.io.File;
@@ -17,8 +16,12 @@ public class OrderDetailsService {
     private List<OrderDetails>orderDetails;
     private OrdersService ordersService;
 
+    private OrdersService getOrdersService(){
+        return ordersService;
+    }
+
     public OrderDetailsService(){
-        ordersService=new OrdersService();
+       // ordersService=new OrdersService();
         orderDetails=new ArrayList<>();
         load();
     }
@@ -45,6 +48,8 @@ public class OrderDetailsService {
         text+=this.orderDetails.get(orderDetails.size()-1).proprietati();
         return text.trim();
     }
+
+
     public void Save(){
         File file=new File("C:\\mycode\\probleme\\OnlineShop\\src\\app\\orderDetails\\data\\orderDetails.txt");
         try{

@@ -2,6 +2,7 @@ package app.system;
 
 import app.products.models.Products;
 import app.products.services.ProductsService;
+import app.products.services.ProductsCommandServiceSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,12 @@ public class Cart {
 
     public Cart(){
         cartItems=new ArrayList<>();
-        productsService=new ProductsService();
+       // productsService=new ProductsService();
+
     }
+//    private ProductsService getProductsService() {
+//       // return ProductsCommandServiceSingleton.getInstance();
+//    }
 
 
 

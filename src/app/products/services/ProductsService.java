@@ -1,11 +1,9 @@
 package app.products.services;
 
-import app.orderDetails.models.OrderDetails;
 import app.orderDetails.services.OrderDetailsService;
-import app.orders.models.Orders;
 import app.orders.services.OrdersService;
+import app.orders.services.OrdersCommandServiceSingleton;
 import app.products.models.Products;
-import app.system.PopularProduct;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,10 +18,18 @@ public class ProductsService {
     private OrdersService ordersService;
     private OrderDetailsService orderDetailsService;
 
+    private OrdersService getOrdersService() {
+        return ordersService;
+    }
+
+    private OrderDetailsService getOrderDetailsService() {
+        return orderDetailsService;
+    }
+
     public ProductsService(){
         productsList=new ArrayList<>();
-        ordersService=new OrdersService();
-        orderDetailsService=new OrderDetailsService();
+       // ordersService=new OrdersService();
+       // orderDetailsService=new OrderDetailsService();
         load();
     }
     public void load(){

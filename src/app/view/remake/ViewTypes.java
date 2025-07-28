@@ -1,4 +1,4 @@
-package app.view;
+package app.view.remake;
 
 public enum ViewTypes {
     ADMIN_VIEW,

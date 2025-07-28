@@ -2,29 +2,32 @@ package app.view.remake;
 
 import app.users.models.User;
 import app.users.models.UserTypes;
+import app.users.services.UsersQuerryService;
 import app.users.services.UsersService;
+import app.users.services.UsersCommandServiceSingleton;
 
 import java.util.Scanner;
 
 public class ViewService {
-    private UsersService usersService;
+   private UsersQuerryService u;
     private Scanner scanner;
     private User user;
 
     public ViewService(){
-        usersService = new UsersService();
         scanner = new Scanner(System.in);
         user = null;
         play();
     }
-
+    private UsersService getUsersService() {
+        return null;
+    }
     public User login(){
         System.out.println("Enter the name ");
         scanner.nextLine();
         String name = scanner.nextLine();
         System.out.println("Enter the password");
         String password = scanner.nextLine();
-        User user = usersService.getUserByNameAndPassword(name, password);
+        User user = getUsersService().getUserByNameAndPassword(name, password);
 
         if(user != null){
             System.out.println("Welcome " + name);
